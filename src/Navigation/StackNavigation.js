@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MoviesListScreen from '../Screens/MoviesList';
 import MoviesDetailsScreen from '../Screens/MovieDetails';
-import FavoriteMoviesScreen from '../Screens/FavoriteMovies';
 import { SafeAreaView } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { fetchMovies } from '../APIS/Repo';
@@ -32,13 +31,13 @@ const StackNavigation = () => {
       });
   }
 
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Stack.Navigator
         initialRouteName="MoviesListScreen">
         <Stack.Screen name="MoviesListScreen" component={MoviesListScreen} options={{ headerShown: false }} />
         <Stack.Screen name="MoviesDetailsScreen" component={MoviesDetailsScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="FavoriteMoviesScreen" component={FavoriteMoviesScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </SafeAreaView>
   );

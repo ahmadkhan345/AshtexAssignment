@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Background, Black, FavoriteBackground, Gray, White } from "../Constants/Colors";
+import { Background, Black, FavoriteBackground, White } from "../Constants/Colors";
 import { useSelector } from "react-redux";
 import { FlatList } from "react-native-gesture-handler";
 import MovieListItem from "../Components/MovieListItem";
 import FavoriteMovieItemListItem from "../Components/FavoriteMovieItem";
+import { isNullOrEmptyArray } from "../Constants/TextUtils";
 
 
 const MoviesListScreen = ({ navigation }) => {
-
+   
     const moviesList = useSelector((state) => state.movies[0]);
-
+    const favoritesList = useSelector((state) => state.favorites);
     const moviesListItems = ({ item }) => {
         return (
             <MovieListItem item={item}
@@ -41,15 +42,20 @@ const MoviesListScreen = ({ navigation }) => {
             </View>
             <View style={{ marginVertical: 15, backgroundColor: FavoriteBackground }}>
                 <Text style={{ marginLeft: 15, fontSize: 18, fontWeight: 'bold' }}> Favorites</Text>
+                {!isNullOrEmptyArray(favoritesList) ?
                 <FlatList
-                    data={moviesList}
+                    data={favoritesList}
                     horizontal={true}
                     scrollEnabled={true}
                     renderItem={favoriteListItems}
                     keyExtractor={(item) => item.id}
                 />
+                 : 
+                 <Text style={{alignSelf:'center',fontSize:16, marginVertical:20,fontWeight:'600'}}>
+                    No Favorites Added Yet
+                 </Text>}
             </View>
-            <Text style={{ marginLeft: 15, fontSize: 18, fontWeight: 'bold', color: Black, marginVertical: 15 }}> All Movies</Text>
+            <Text style={{ marginLeft: 15, fontSize: 18, fontWeight: 'bold', color: Black, marginVertical: 15 }}>All Movies</Text>
             <FlatList
                 data={moviesList}
                 numColumns={2}

@@ -12,3 +12,19 @@ export function isNullArray(array) {
 export function isEmptyArray(array) {
     return array.length === 0;
 }
+
+export function isNullOrEmpty(str) {
+    if (str === undefined) return true;
+    else if (isNull(str)) return true;
+    else if (isEmpty(str)) return true;
+    else return false;
+}
+
+export function isNull(str) {
+    return str === null;
+}
+
+
+export function isEmpty(str) {
+    return str === "";
+}

@@ -1,14 +1,14 @@
 import React from "react";
 import { TouchableOpacity, Image, StyleSheet } from "react-native";
 import { Black } from "../Constants/Colors";
+import { IMAGE_URL } from "../Constants/Constants";
 
 
 export default function FavoriteMovieItemListItem({ item,onPress }) {
-    const url = 'https://image.tmdb.org/t/p/original'
 
     return (
         <TouchableOpacity style={styles.item} onPress={onPress}>
-            <Image style={styles.posterStyle} source={{ uri: url.concat(item.poster_path) }} />
+            <Image style={styles.posterStyle} source={{ uri: IMAGE_URL.concat(item.poster_path) }} />
         </TouchableOpacity>
     );
 };
