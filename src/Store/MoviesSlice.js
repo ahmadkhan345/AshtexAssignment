@@ -5,7 +5,7 @@ export const moviesSlice = createSlice({
   initialState: [],
   reducers: {
     moviesListing: (state, action) => {
-      console.log('redux movies',action.payload.movies);
+      // console.log('redux movies',action.payload.movies);
   
       state.push(action.payload.movies);
     },

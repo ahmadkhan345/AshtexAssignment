@@ -1,43 +1,62 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Background, Black, White } from "../Constants/Colors";
-import { fetchMovies } from "../APIS/Repo";
-import { useDispatch, useSelector } from "react-redux";
+import { Background, Black, FavoriteBackground, Gray, White } from "../Constants/Colors";
+import { useSelector } from "react-redux";
+import { FlatList } from "react-native-gesture-handler";
+import MovieListItem from "../Components/MovieListItem";
+import FavoriteMovieItemListItem from "../Components/FavoriteMovieItem";
 
 
-const MoviesListScreen = () => {
+const MoviesListScreen = ({ navigation }) => {
 
-    // useEffect(() => {
-    //     getMoviesList();
-    // }, [])
-    // const dispatch = useDispatch();
+    const moviesList = useSelector((state) => state.movies[0]);
 
-    // const getMoviesList = () => {
-    //     fetchMovies()
-    //         .then(data => {
-    //             dispatch(
-    //                 moviesListing({
-    //                   movies: data.results,
-    //                 })
-    //               );
-    //             // console.log(data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error:', error);
-    //         });
-    // }
+    const moviesListItems = ({ item }) => {
+        return (
+            <MovieListItem item={item}
+                onPress={() => {
+                    navigation.navigate('MoviesDetailsScreen', { movieDetails: item })
+                }}
+            />
+        );
+    };
 
-    // const moviesList = useSelector((state) => state.moviesList);
-
-    // console.log('movies list',moviesList)
+    const favoriteListItems = ({ item }) => {
+        return (
+            <FavoriteMovieItemListItem
+                item={item}
+                onPress={() => {
+                    navigation.navigate('MoviesDetailsScreen', { movieDetails: item })
+                }}
+            />
+        );
+    };
 
     return (
         <View style={styles.container}>
             <View style={styles.headerView}>
                 <Text style={styles.headerText}>
-                    Movies List
+                    Home
                 </Text>
             </View>
+            <View style={{ marginVertical: 15, backgroundColor: FavoriteBackground }}>
+                <Text style={{ marginLeft: 15, fontSize: 18, fontWeight: 'bold' }}> Favorites</Text>
+                <FlatList
+                    data={moviesList}
+                    horizontal={true}
+                    scrollEnabled={true}
+                    renderItem={favoriteListItems}
+                    keyExtractor={(item) => item.id}
+                />
+            </View>
+            <Text style={{ marginLeft: 15, fontSize: 18, fontWeight: 'bold', color: Black, marginVertical: 15 }}> All Movies</Text>
+            <FlatList
+                data={moviesList}
+                numColumns={2}
+                scrollEnabled={true}
+                renderItem={moviesListItems}
+                keyExtractor={(item) => item.id}
+            />
         </View>
     );
 
@@ -57,7 +76,7 @@ const styles = StyleSheet.create({
     headerText: {
         color: Black,
         fontSize: 24,
-    }
+    },
 })
 
 export default MoviesListScreen;
